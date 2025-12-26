@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  kali-wireless:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kali-wireless
+    hostname: kali-wireless
+    # Run with host network for direct wireless interface access
+    network_mode: host
+    # Required for wireless operations
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    # Keep container running
+    stdin_open: true
+    tty: true
+    # Mount volumes for persistent data
+    volumes:
+      - ./captures:/root/wireless/captures
+      - ./wordlists:/root/wireless/wordlists
+      - ./output:/root/wireless/output
+    # Environment variables
+    environment:
+      - TERM=xterm-256color
+    # Restart policy
+    restart: unless-stopped

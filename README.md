@@ -113,9 +113,6 @@ hashcat -m 22000 hashes.hc22000 wordlist.txt
 - Your wireless adapter must support monitor mode
 - USB wireless adapters should be passed through to container
 
-### Legal Notice
-⚠️ **WARNING**: These tools are for authorized security testing only. Unauthorized access to computer networks is illegal. Always obtain proper authorization before conducting wireless assessments.
-
 ### Performance Tips
 1. **GPU Cracking**: Use hashcat on the host system for GPU acceleration
 2. **USB Adapters**: Use `--device=/dev/bus/usb` to pass through USB devices

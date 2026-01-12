@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  kali-wireless:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: kali-wireless-gpu
+    hostname: kali-wireless
+    # Run with host network for direct wireless interface access
+    network_mode: host
+    # Required for wireless operations
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    # GPU support - requires NVIDIA Container Toolkit
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    # Keep container running
+    stdin_open: true
+    tty: true
+    # Mount volumes for persistent data
+    volumes:
+      - ./captures:/root/wireless/captures
+      - ./wordlists:/root/wireless/wordlists
+      - ./output:/root/wireless/output
+    # Environment variables
+    environment:
+      - TERM=xterm-256color
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    # Restart policy
+    restart: unless-stopped
